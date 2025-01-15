@@ -1,0 +1,496 @@
+-- Refactored Animation Handling Code
+-- Refactored Animation Handling Code with VFX
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Define a table with animation data for each animation ID
+local animationData = {
+    {
+        animationId = 10469493270,
+        animId = "rbxassetid://16515503507", -- Animation ID for this track
+        startTime = 0,
+        speed = 0.9
+    },
+    {
+        animationId = 13532600125,
+        animId = "rbxassetid://16515520431", -- Animation ID for this track
+        startTime = 0,
+        speed = 0.9
+    },
+    {
+        animationId = 13532604085,
+        animId = "rbxassetid://16515448089", -- Animation ID for this track
+        startTime = 0,
+        speed = 0.9
+    },
+    {
+        animationId = 13294471966,
+        animId = "rbxassetid://16552234590", -- Animation ID for this track
+        startTime = 0,
+        speed = 0.9
+    }
+}
+
+-- Function to create and play particle effect
+local function createVFX()
+    local particle = Instance.new("ParticleEmitter")
+    particle.Texture = "rbxassetid://12856823183" -- Set the particle texture
+    particle.Color = ColorSequence.new(Color3.fromRGB(255, 0, 0)) -- Set the color to red
+    particle.Lifetime = NumberRange.new(1, 2) -- Set the lifetime of the particle
+    particle.Rate = 50 -- How fast particles spawn
+    particle.Size = NumberSequence.new(0.5, 1) -- Particle size
+
+    -- Parent the particle to the character's torso or another part (adjust as needed)
+    particle.Parent = character:WaitForChild("Torso")
+    return particle
+end
+
+-- Function to stop all playing animations and play the specified animation with VFX
+local function stopAndPlayAnimation(animData)
+    -- Stop all currently playing animations
+    for _, animTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+        animTrack:Stop()
+    end
+
+    -- Create and load the new animation
+    local AnimAnim = Instance.new("Animation")
+    AnimAnim.AnimationId = animData.animId
+    local Anim = humanoid:LoadAnimation(AnimAnim)
+
+    -- Create and play the VFX (particle effect)
+    local particleEffect = createVFX()
+
+    -- Start the animation and adjust speed
+    Anim:Play()
+    Anim:AdjustSpeed(0.1)
+    Anim.TimePosition = animData.startTime
+    Anim:AdjustSpeed(animData.speed)
+
+    -- Clean up the particle effect after animation ends
+    game:GetService("Debris"):AddItem(particleEffect, Anim.Length)
+end
+
+-- Handle animation played event
+local function onAnimationPlayed(animationTrack)
+    for _, data in ipairs(animationData) do
+        if animationTrack.Animation.AnimationId == "rbxassetid://" .. data.animationId then
+            stopAndPlayAnimation(data)
+            break
+        end
+    end
+end
+
+-- Connect the AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+-- Services
+local Players = game:GetService("Players")
+
+-- Get the local player and their character
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Wait for the torso to exist in the character
+local torso = character:WaitForChild("Torso") -- Adjust to "UpperTorso" if using R15
+
+-- Create Attachment directly on the torso
+local attachment = Instance.new("Attachment")
+attachment.Name = "ParticleAttachment"
+attachment.Parent = torso
+
+-- Create ParticleEmitter
+local particleEmitter = Instance.new("ParticleEmitter")
+particleEmitter.Lifetime = NumberRange.new(4, 4)
+particleEmitter.SpreadAngle = Vector2.new(-360, 360)
+particleEmitter.Transparency = NumberSequence.new(0, 1)
+particleEmitter.LightEmission = 1
+particleEmitter.Color = ColorSequence.new(Color3.fromRGB(255, 60, 60))
+particleEmitter.VelocitySpread = -360
+particleEmitter.Squash = NumberSequence.new(0)
+particleEmitter.Speed = NumberRange.new(0.01, 0.01)
+particleEmitter.Brightness = 3
+particleEmitter.Size = NumberSequence.new(0, 5.4375)
+particleEmitter.Texture = "http://www.roblox.com/asset/?id=917181007"
+particleEmitter.Rotation = NumberRange.new(-180, 180)
+particleEmitter.Orientation = Enum.ParticleOrientation.VelocityPerpendicular
+particleEmitter.Rate = 50
+-- Set VelocityInheritance to 0 to prevent particles from dragging
+particleEmitter.VelocityInheritance = 0
+
+-- Add drag to particles
+particleEmitter.Drag = 1  -- Adjust this value to control the drag effect (higher values = more drag)
+
+particleEmitter.Parent = attachment
+--[[Move 1]]
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+local baseButton = hotbarFrame:FindFirstChild("1").Base
+local ToolName = baseButton.ToolName
+ToolName.Text = "Zero-Day Exploit"
+--[[Move 2]]
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+local baseButton = hotbarFrame:FindFirstChild("2").Base
+local ToolName = baseButton.ToolName
+ToolName.Text = "Overload Protocol"
+--[[Move 3]]
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+local baseButton = hotbarFrame:FindFirstChild("3").Base
+local ToolName = baseButton.ToolName
+ToolName.Text = "Code Snatch"
+--[[Move 3]]
+local player = game.Players.LocalPlayer
+local playerGui = player.PlayerGui
+local hotbar = playerGui:FindFirstChild("Hotbar")
+local backpack = hotbar:FindFirstChild("Backpack")
+local hotbarFrame = backpack:FindFirstChild("Hotbar")
+local baseButton = hotbarFrame:FindFirstChild("4").Base
+local ToolName = baseButton.ToolName
+ToolName.Text = "Exploit Reversal"
+--[[Ultimate Name]]
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+local function findGuiAndSetText()
+    local screenGui = playerGui:FindFirstChild("ScreenGui")
+    if screenGui then
+        local magicHealthFrame = screenGui:FindFirstChild("MagicHealth")
+        if magicHealthFrame then
+            local textLabel = magicHealthFrame:FindFirstChild("TextLabel")
+            if textLabel then
+                textLabel.Text = "Full System Invasion"
+            end
+        end
+    end
+end
+playerGui.DescendantAdded:Connect(findGuiAndSetText)
+findGuiAndSetText()
+--[[Move Anims]]
+--[[Move 1]]
+local animationId = 12273188754
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Function to create and return random particle effects
+local function createRandomVFX()
+    local rightArm = character:WaitForChild("RightArm") -- Attach to right arm (can change this to any part)
+
+    -- Create the particle emitter
+    local particle = Instance.new("ParticleEmitter")
+    particle.Texture = "rbxassetid://15270200015" -- The particle effect texture
+    particle.Color = ColorSequence.new(Color3.fromRGB(255, 0, 0)) -- Red color for the effect
+    particle.Lifetime = NumberRange.new(0.5, 1) -- Random lifetime
+    particle.Rate = 100 -- Emit particles quickly
+    particle.Size = NumberSequence.new(0.5, 1.5) -- Random size range
+    particle.Speed = NumberRange.new(10, 30) -- Random speed for the particles
+    particle.VelocityInheritance = 0.5
+    particle.Rotation = NumberRange.new(0, 360) -- Random rotation for a dynamic look
+    particle.SpreadAngle = Vector2.new(180, 180) -- Spread in all directions
+    particle.Parent = rightArm -- Attach particle effect to right arm
+
+    -- Start the particle emitter
+    particle:Emit(100) -- Emit particles at once for a quick burst
+end
+
+-- Function to stop all current animations and start the new one
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+        local p = game.Players.LocalPlayer
+        local Humanoid = p.Character:WaitForChild("Humanoid")
+
+        -- Stop any currently playing animations
+        for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+            animTrack:Stop()
+        end
+
+        -- Load and play the new animation
+        local AnimAnim = Instance.new("Animation")
+        AnimAnim.AnimationId = "rbxassetid://18897695481"
+        local Anim = Humanoid:LoadAnimation(AnimAnim)
+        local startTime = 0
+        Anim:Play()
+        Anim:AdjustSpeed(0.1)
+        Anim.TimePosition = startTime
+        Anim:AdjustSpeed(1)
+
+        -- Trigger the random VFX after animation starts
+        createRandomVFX()
+    end
+end
+
+-- Connect the AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+--[[Move 2 anim]]
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId = 12296113986
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://anim_id_here"
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+local startTime = 0
+Anim:Play()
+Anim:AdjustSpeed(1)
+Anim.TimePosition = startTime
+Anim:AdjustSpeed(1)
+    end
+end
+--[[End of Move 2 anim]]
+--[[Move 3]]
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId = 12309835105
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://anim_id_here"
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+local startTime = 0.3
+Anim:Play()
+Anim:AdjustSpeed(0)
+Anim.TimePosition = startTime
+Anim:AdjustSpeed(1)
+delay(1.8, function()
+    Anim:Stop()
+end)
+    end
+end
+--[[End Of Move 3 Anim]]
+--[[MOVE 4]]
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId = 13603396939
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://anim_id_here"
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+local startTime = 0
+Anim:Play()
+Anim:AdjustSpeed(0)
+Anim.TimePosition = startTime
+Anim:AdjustSpeed(1)
+    end
+end
+--[[End Of Move 4 Anim]]
+--[[Wall Combo]]
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId = 16310343179
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://anim_id_here"
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+local startTime = 0.05
+Anim:Play()
+Anim:AdjustSpeed(0)
+Anim.TimePosition = startTime
+Anim:AdjustSpeed(1)
+    end
+end
+--[[End Of Wall Combo Anim]]
+--[[Ult Anim]]
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId = 18435535291
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://anim_id_here"
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+local startTime = 0
+Anim:Play()
+Anim:AdjustSpeed(0)
+Anim.TimePosition = startTime
+Anim:AdjustSpeed(1)
+    end
+end
+--[[End Of Ult Anim]]
+--[[Downslam]]
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId = 10470104242
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://anim_id_here"
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+local startTime = 0
+wait(0.2)
+Anim:Play()
+Anim:AdjustSpeed(0)
+Anim.TimePosition = startTime
+Anim:AdjustSpeed(6)
+    end
+end
+--[[End Of Downslam Anim]]
+
+--[[Uppercut]]
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+local animationId = 10503381238
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. animationId then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://17464644182"
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+local startTime = 1
+wait(0.2)
+Anim:Play()
+Anim:AdjustSpeed(0)
+Anim.TimePosition = startTime
+Anim:AdjustSpeed(1)
+    end
+end
+--[[End Of Downslam Anim]]
+--[[For Move 1]]
+--[[Delete If You Velocity]]
+--[[Animation Ids:https://docs.google.com/document/d/1OtBDo5fgZGMORYR6DcalWdnCoz1ZF7WBFzsDtihD4vE/edit?usp=drivesdk]]
+--[[No Velocity]]
+character.DescendantAdded:Connect(onBodyVelocityAdded)
+for _, descendant in pairs(character:GetDescendants()) do
+    onBodyVelocityAdded(descendant)
+end
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    character.DescendantAdded:Connect(onBodyVelocityAdded)
+   
+    for _, descendant in pairs(character:GetDescendants()) do
+        onBodyVelocityAdded(descendant)
+    end
+end)
+
+
+-- M1s Add VFX If You Want
+
+-- Refactored Animation Handling Code
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Define a table with animation data for each animation ID
+local animationData = {
+    {
+        animationId = 10469493270,
+        animId = "rbxassetid://16515503507", -- Animation ID for this track
+        startTime = 0,
+        speed = 0.9
+    },
+    {
+        animationId = 13532600125,
+        animId = "rbxassetid://16515520431", -- Animation ID for this track
+        startTime = 0,
+        speed = 0.9
+    },
+    {
+        animationId = 13532604085,
+        animId = "rbxassetid://16515448089", -- Animation ID for this track
+        startTime = 0,
+        speed = 0.9
+    },
+    {
+        animationId = 13294471966,
+        animId = "rbxassetid://16552234590", -- Animation ID for this track
+        startTime = 0,
+        speed = 0.9
+    }
+}
+
+-- Function to stop all playing animations and play the specified animation
+local function stopAndPlayAnimation(animData)
+    -- Stop all currently playing animations
+    for _, animTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+        animTrack:Stop()
+    end
+
+    -- Create and load the new animation
+    local AnimAnim = Instance.new("Animation")
+    AnimAnim.AnimationId = animData.animId
+    local Anim = humanoid:LoadAnimation(AnimAnim)
+
+    -- Start the animation and adjust speed
+    Anim:Play()
+    Anim:AdjustSpeed(0.1)
+    Anim.TimePosition = animData.startTime
+    Anim:AdjustSpeed(animData.speed)
+end
+
+-- Handle animation played event
+local function onAnimationPlayed(animationTrack)
+    for _, data in ipairs(animationData) do
+        if animationTrack.Animation.AnimationId == "rbxassetid://" .. data.animationId then
+            stopAndPlayAnimation(data)
+            break
+        end
+    end
+end
+
+-- Connect the AnimationPlayed event
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
